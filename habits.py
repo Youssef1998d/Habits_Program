@@ -1,5 +1,3 @@
-
-
 class Date:
     def __init__(self, second, minute, hour, day, month, year):
         self.hour = hour
@@ -34,26 +32,7 @@ class Habit:
     def time_interval(self):
         if self.time['in'].day != self.time['out'].day:
             return (240000-int(str(self.time['in'].intify())[6:]))+int(str(self.time['out'].intify())[6:])
-        return self.time["out"].intify()-self.time["in"].intify()
-
-
-    def modify_category(self, new_category):
-        if type(new_category)==type(''):
-            self.category.append(new_category)
-            return 1
-        elif type(new_category)==type([]):
-            self.category = new_category
-            return 1
-        else:
-            return 0
-
-    def rename(self, new_name):
-        self.name=new_name
-        return 1
-    
-    def change_frequency(self, new_frequency):
-        self.frequency = new_frequency
-        return 1
+        return self.time["out"].intify()-self.time["in"].intify()0
 
 class Habit_Card:
     def __init__(self, habit_list, date):
@@ -61,9 +40,5 @@ class Habit_Card:
         self.date = date
         self.score = [x.mark for x in habit_list].count('+')/len(habit_list)
     
-
-d = Date(2, 20, 3, 15,3,2023)
-print(d.intify())
-
 h = Habit("Sleep", "Genuin Health Obligatory", Date(0,30,23,1,1,2023), Date(0,30,6,2,1,2023), 1, "+", "Home Bedroom")
 print(h.time_interval())
