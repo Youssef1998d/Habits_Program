@@ -21,24 +21,34 @@ class Date:
         return int(d)
 
 class Habit:
-    def __init__(self, name, category, time_in, time_out, frequency = 0, mark='', location=''):
+    def __init__(self, name, category, frequency = 0, mark='', description=""):
         self.name = name
         self.category = category
         self.frequency = frequency
         self.mark = mark
+        self.description = description
+
+class Action(Habit):
+    def __init__(self, time_in, time_out, location, description=""):
         self.location = location
         self.time = {"in":time_in, "out":time_out}
+        self.description = description
 
     def time_interval(self):
         if self.time['in'].day != self.time['out'].day:
             return (240000-int(str(self.time['in'].intify())[6:]))+int(str(self.time['out'].intify())[6:])
-        return self.time["out"].intify()-self.time["in"].intify()0
+        return self.time["out"].intify()-self.time["in"].intify()
 
 class Habit_Card:
     def __init__(self, habit_list, date):
         self.habit_list=habit_list
         self.date = date
         self.score = [x.mark for x in habit_list].count('+')/len(habit_list)
-    
-h = Habit("Sleep", "Genuin Health Obligatory", Date(0,30,23,1,1,2023), Date(0,30,6,2,1,2023), 1, "+", "Home Bedroom")
-print(h.time_interval())
+
+
+
+
+
+
+
+
