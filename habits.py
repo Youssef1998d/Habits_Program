@@ -45,6 +45,64 @@ class Habit_Card:
         self.date = date
         self.score = [x.mark for x in habit_list].count('+')/len(habit_list)
 
+def get_data(filename):
+    with open(filename, "r") as file:
+        txt = file.read()
+    return [x.split(';') for x in txt.split('\n')]
+
+def get_spending_list(data):
+    all_categories = set(x[1] for x in data if x[0]=='Spend')
+    spendings = {x:0 for x in all_categories}
+    all_spendings = [(x[1],x[2]) for x in data if x[0]=='Spend']
+    for spending in all_spendings:
+        spendings[spending[0]]+=float(spending[1].replace(',','.'))
+    return spendings
+
+def calculate_spendings(spending_list):
+    s=0
+    for x in spending_list:
+        s+=spending_list[x]
+    return s
+
+def cash_out(filename):
+    return calculate_spendings(get_spending_list(get_data("doing.txt")))
+
+def cash_in(filename):
+    data = get_data(filename)
+    s = 0
+    for line in data:
+        if line[0]=="Cash-in":
+            s+=(float(line[1].replace(',', '.')))
+    return s
+
+def money_left(filename):
+    return cash_in(filename)-cash_out(filename)
+
+def max_spent(filename):
+    spending_list = get_spending_list(get_data(filename))
+    c,max=0,""
+    for x in spending_list:
+        if c<spending_list[x]:
+            max=x
+            c=spending_list[x]
+    return max,c
+
+def min_spent(filename):
+    spending_list = get_spending_list(get_data(filename))
+    c,min=max_spent(filename)[1],""
+    for x in spending_list:
+        if c>spending_list[x]:
+            min=x
+            c=spending_list[x]
+    return min,c
+
+def counted_spendings(filename):
+    data = get_data(filename)
+    
+
+print(max_spent("doing.txt"))
+
+
 
 
 
